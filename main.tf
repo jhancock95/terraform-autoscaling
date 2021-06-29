@@ -1,17 +1,7 @@
 provider "aws" {
   region     = "us-east-1"
-  access_key = "AKIA3WTKFSZGWMP6NBGW"
-  secret_key = "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"
-}
-
-data "template_file" "testfile" {
-  template = <<EOF
-#!/bin/bash
-apt update -y
-apt install apache2 -y
-systemct1 start apache2
-echo "hello, world!" > var/www/html/index.html
-EOF
+  access_key = "xxxxxxxxxx"
+  secret_key = "xxxxxxxxxx"
 }
 
 resource "aws_vpc" "first_vpc" {
@@ -129,7 +119,6 @@ resource "aws_launch_template" "frontend" {
   image_id               = "ami-0ee02acd56a52998e"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.allow_web.id]
-  #user_data              = base64encode(data.template_file.testfile.rendered)
   user_data = base64encode("${file("apache_launch.sh")}")
 }
 
